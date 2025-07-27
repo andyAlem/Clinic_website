@@ -9,12 +9,15 @@ User = get_user_model()
 
 
 class RegisterView(generics.CreateAPIView):
+    """
+    Регистрация нового пользователя"""
     queryset = User.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """Токен с информацией о пользователе"""
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -24,10 +27,12 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class LoginView(TokenObtainPairView):
+    """Логин пользователя"""
     serializer_class = CustomTokenObtainPairSerializer
 
 
 class MeView(generics.RetrieveAPIView):
+    """Получение информации о текущем пользователе"""
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
 

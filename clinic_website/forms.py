@@ -7,6 +7,7 @@ from .models import Appointment
 
 
 class UserLoginForm(AuthenticationForm):
+    """Форма для авторизации"""
     username = forms.EmailField(
         label="Email", widget=forms.EmailInput(attrs={"class": "form-control"})
     )
@@ -16,6 +17,7 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegistrationForm(forms.ModelForm):
+    """Форма для регистрации"""
     password = forms.CharField(
         label="Пароль", widget=forms.PasswordInput(attrs={"class": "form-control"})
     )

@@ -37,8 +37,7 @@
 ## Инструкция по запуску
 
 1. Клонируйте репозиторий:
-2. 
-git clone <URL-репозитория>
+git clone https://github.com/andyAlem/Clinic_website.git
 cd Clinic_website
 
 2. Постройте образы и запустите контейнеры:
