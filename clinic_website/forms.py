@@ -3,11 +3,12 @@ from django.contrib.auth.forms import AuthenticationForm
 
 from users.models import CustomUser
 
-from .models import Appointment
+from .models import Appointment, DiagnosisNote
 
 
 class UserLoginForm(AuthenticationForm):
     """Форма для авторизации"""
+
     username = forms.EmailField(
         label="Email", widget=forms.EmailInput(attrs={"class": "form-control"})
     )
@@ -18,6 +19,7 @@ class UserLoginForm(AuthenticationForm):
 
 class UserRegistrationForm(forms.ModelForm):
     """Форма для регистрации"""
+
     password = forms.CharField(
         label="Пароль", widget=forms.PasswordInput(attrs={"class": "form-control"})
     )

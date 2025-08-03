@@ -1,6 +1,6 @@
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -10,7 +10,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .forms import AppointmentForm
-from .models import Appointment
+from .models import Appointment, Service, TeamMember
 from .permissions import IsOwnerOrModerator
 from .serializers import AppointmentSerializer
 
@@ -141,3 +141,45 @@ class IndexView(TemplateView):
     """Представление для главной страницы."""
 
     template_name = "clinic_website/index.html"
+
+
+####
+class AboutView(TemplateView):
+    """"""
+
+    template_name = "clinic_website/about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["team"] = TeamMember.objects.all()
+        return context
+
+
+class ServicesView(ListView):
+    model = Service
+    template_name = "clinic_website/services.html"
+    context_object_name = "services"
+
+
+class ContactsView(TemplateView):
+    template_name = "clinic_website/contacts.html"
+
+
+class AccountView(LoginRequiredMixin, TemplateView):
+    template_name = "clinic_website/account.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["appointments"] = Appointment.objects.filter(
+            patient=self.request.user
+        ).order_by("-date")
+        return context
+
+
+@login_required
+def diagnosis_results_view(request):
+    """Результаты диагностики"""
+    context = {
+        "message": "Результаты обследований пока отсутствуют.",
+    }
+    return render(request, "clinic_website/diagnosis_results.html", context)

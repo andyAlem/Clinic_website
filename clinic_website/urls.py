@@ -1,10 +1,12 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import (AppointmentCreateView, AppointmentDeleteView,
-                    AppointmentListView, AppointmentUpdateView,
-                    AppointmentViewSet, CancelAppointmentView,
-                    ConfirmAppointmentView, IndexView, ModeratorPanelView,
+from . import views
+from .views import (AboutView, AccountView, AppointmentCreateView,
+                    AppointmentDeleteView, AppointmentListView,
+                    AppointmentUpdateView, AppointmentViewSet,
+                    CancelAppointmentView, ConfirmAppointmentView,
+                    ContactsView, IndexView, ModeratorPanelView, ServicesView,
                     StaticPageView)
 from .views_auth import CustomLoginView, CustomLogoutView, RegisterView
 
@@ -32,19 +34,18 @@ urlpatterns = [
     ),
     path("appointments/", AppointmentListView.as_view(), name="appointments_list"),
     path(
+        "diagnosis-results/",
+        views.diagnosis_results_view,
+        name="view_diagnosis_results",
+    ),
+    path("account/", AccountView.as_view(), name="account"),  # Личный кабинет
+    path("about/", AboutView.as_view(), name="about"),  # О нас
+    path("services/", ServicesView.as_view(), name="services"),  # Услуги
+    path("contacts/", ContactsView.as_view(), name="contacts"),  # Контакты
+    path(
         "success/",
         StaticPageView.as_view(template_name="clinic_website/success.html"),
         name="appointment_success",
-    ),
-    path(
-        "about/",
-        StaticPageView.as_view(template_name="clinic_website/about.html"),
-        name="about",
-    ),
-    path(
-        "contacts/",
-        StaticPageView.as_view(template_name="clinic_website/contacts.html"),
-        name="contacts",
     ),
     path("moderator/", ModeratorPanelView.as_view(), name="moderator_panel"),
     path(

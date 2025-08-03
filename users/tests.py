@@ -7,6 +7,7 @@ from users.models import CustomUser
 @pytest.mark.django_db
 class TestAuthViews:
     """Тесты для авторизации и регистрации"""
+
     def test_registration(self, client):
         url = reverse("clinic_website:register")
         data = {

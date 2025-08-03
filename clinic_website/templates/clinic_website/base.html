@@ -1,5 +1,4 @@
 {% load static %}
-{% load bootstrap_filters %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -13,26 +12,42 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <a class="navbar-brand" href="{% url 'clinic_website:index' %}">Медицинский центр "Доктор Миллер"</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Переключить навигацию">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav ms-auto">
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'clinic_website:make_appointment' %}">Запись</a>
                 </li>
 
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'clinic_website:appointments_list' %}">Мои записи</a>
-                    </li>
-                {% endif %}
-                {% if user.is_authenticated and user.is_moderator %}
-    <a href="{% url 'clinic_website:moderator_panel' %}" class="nav-link">Панель модератора</a>
-{% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Личный кабинет
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                        {% if user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{% url 'clinic_website:appointments_list' %}">Мои записи</a></li>
+                            <li><a class="dropdown-item" href="{% url 'clinic_website:view_diagnosis_results' %}">Результаты обследований</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="{% url 'clinic_website:logout' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item btn btn-link p-0 m-0" style="width: 100%; text-align: left;">Выйти</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'clinic_website:login' %}">Вход</a></li>
+                            <li><a class="dropdown-item" href="{% url 'clinic_website:register' %}">Регистрация</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
 
-
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'clinic_website:services' %}">Услуги</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'clinic_website:about' %}">О нас</a>
                 </li>
@@ -40,24 +55,12 @@
                     <a class="nav-link" href="{% url 'clinic_website:contacts' %}">Контакты</a>
                 </li>
 
-                {% if user.is_authenticated %}
-    <li class="nav-item">
-  <form method="post" action="{% url 'clinic_website:logout' %}" class="d-inline">
-    {% csrf_token %}
-    <button type="submit" class="nav-link btn btn-link p-0" style="height: 100%;">Выйти</button>
-  </form>
-</li>
-
-
-{% else %}
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'clinic_website:login' %}">Вход</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'clinic_website:register' %}">Регистрация</a>
-                    </li>
+                {% if user.is_authenticated and user.is_moderator %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'clinic_website:moderator_panel' %}">Панель модератора</a>
+                </li>
                 {% endif %}
+
             </ul>
         </div>
     </div>
@@ -67,4 +70,6 @@
     {% block content %}{% endblock %}
 </main>
 
-<script src="{% static 'js
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

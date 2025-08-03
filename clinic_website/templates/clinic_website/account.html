@@ -1,0 +1,21 @@
+{% extends "clinic_website/base.html" %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+<h2>Личный кабинет</h2>
+
+{% if appointments %}
+    <h4>Ваши записи</h4>
+    <ul class="list-group">
+        {% for appointment in appointments %}
+            <li class="list-group-item">
+                <strong>{{ appointment.date|date:"d.m.Y H:i" }}</strong> —
+                {{ appointment.doctor }} ({{ appointment.status }})
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>У вас пока нет записей.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "clinic_website/base.html" %}
+{% block title %}Услуги{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Наши услуги</h1>
+<p class="mb-4">
+    В медицинском центре "Доктор Миллер" мы предлагаем широкий спектр современных медицинских услуг — от консультаций опытных специалистов до комплексных диагностических и терапевтических процедур. Ниже вы можете ознакомиться с перечнем предоставляемых услуг и их стоимостью.
+</p>
+
+<ul class="list-group">
+    {% for service in services %}
+        <li class="list-group-item">
+            <h5 class="mb-1">{{ service.title }}</h5>
+            <p class="mb-1">{{ service.description }}</p>
+            <strong>Цена: {{ service.price }} ₽</strong>
+        </li>
+    {% empty %}
+        <li class="list-group-item">На данный момент услуги не добавлены.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
