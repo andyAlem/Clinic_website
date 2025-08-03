@@ -1,0 +1,26 @@
+{% extends 'clinic_website/base.html' %}
+{% block title %}Мои записи{% endblock %}
+{% block content %}
+<h2 class="mb-4">Мои записи</h2>
+
+{% if appointments %}
+    <div class="list-group">
+        {% for appointment in appointments %}
+            <div class="list-group-item">
+                <strong>Имя:</strong> {{ appointment.full_name }}<br>
+                <strong>Дата:</strong> {{ appointment.date }}<br>
+                <strong>Причина:</strong> {{ appointment.comment }}<br>
+                <strong>Статус:</strong> {{ appointment.get_status_display }}<br>
+                {% if appointment.can_edit %}
+    <div class="mt-2">
+        <a href="{% url 'clinic_website:appointment_edit' appointment.pk %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
+        <a href="{% url 'clinic_website:appointment_delete' appointment.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+    </div>
+{% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>У вас пока нет записей.</p>
+{% endif %}
+{% endblock %}

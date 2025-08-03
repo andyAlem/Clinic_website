@@ -1,0 +1,37 @@
+{% extends 'clinic_website/base.html' %}
+{% block title %}Добро пожаловать{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4">Добро пожаловать в наш медицинский центр</h1>
+    <p class="lead">Мы заботимся о вашем здоровье. Запишитесь на приём онлайн в любое удобное время.</p>
+    <a href="{% url 'clinic_website:make_appointment' %}" class="btn btn-primary btn-lg mt-3">Записаться на приём</a>
+</div>
+
+<div class="container my-5">
+    <div class="row text-center">
+        <div class="col-md-4">
+            <h4>УЗИ диагностика</h4>
+            <p>Современное оборудование для точной визуализации внутренних органов.</p>
+        </div>
+        <div class="col-md-4">
+            <h4>Анализы</h4>
+            <p>Быстрое и точное выполнение лабораторных исследований.</p>
+        </div>
+        <div class="col-md-4">
+            <h4>Консультации</h4>
+            <p>Опытные врачи разных направлений готовы помочь вам.</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5">
+    <div class="container">
+        <h3 class="mb-3">О нас</h3>
+        <p>Наша клиника работает с 2008 года и предлагает качественные медицинские услуги по диагностике, анализам и консультациям.</p>
+        <a href="{% url 'clinic_website:about' %}" class="btn btn-outline-secondary">Узнать больше</a>
+    </div>
+</div>
+
+
+{% endblock %}
